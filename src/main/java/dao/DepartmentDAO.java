@@ -12,13 +12,18 @@ public class DepartmentDAO {
     public List<Department> getDepts(){
         Transaction transaction = null;
         List<Department> departments = new ArrayList<>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
             departments = session.createQuery("from Department", Department.class).list();
 
             transaction.commit();
-
+            session.close();
+        } catch (Exception e){
+            if (transaction != null){
+                transaction.rollback();
+            }
+        }
         return departments;
     }
 }

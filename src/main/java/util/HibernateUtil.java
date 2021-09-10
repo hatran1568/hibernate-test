@@ -10,16 +10,14 @@ public class HibernateUtil {
     private static SessionFactory sessionFactory;
 
     static{
-//        try{
+        try{
             Configuration cfg=new Configuration().configure("hibernate.cfg.xml");
-
-
             sessionFactory=cfg.buildSessionFactory();
-//        }
-//
-//        catch(HibernateException exception){
-//            System.out.println("Problem creating session factory");
-//        }
+        }
+
+        catch(HibernateException exception){
+            System.out.println("Problem creating session factory");
+        }
     }
 
     public static SessionFactory getSessionFactory() {
